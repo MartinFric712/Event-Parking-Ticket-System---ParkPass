@@ -1,539 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EventHub - My Account</title>
-
+  <title>ParkPass — My Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --navy: #0a0f1e;
+      --navy-mid: #111827;
+      --navy-light: #1a2238;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8;
+      --muted: #8892a4;
+      --green: #2ecc71;
     }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #2c3e50;
-      color: #333;
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--navy); color: var(--cream); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px; height: 72px;
+      background: rgba(10,15,30,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+    .brand span { color: var(--cream); }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; padding: 8px 16px; border-radius: 6px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--cream); background: var(--gold-dim); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--navy) !important; font-weight: 600 !important; padding: 8px 20px !important; border-radius: 6px; }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    .layout {
+      max-width: 1200px; margin: 0 auto;
+      padding: 100px 56px 80px;
+      display: grid; grid-template-columns: 260px 1fr; gap: 32px;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      min-height: 70px;
-      background: #34495e;
-      border-bottom: 2px solid #2c3e50;
-    }
-
-    .brand {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #ecf0f1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .brand::before {
-      content: "🎪";
-      font-size: 1.5rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: #ecf0f1;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: 4px;
-    }
-
-    .nav-links a:hover {
-      color: #3498db;
-      background: #2c3e50;
-    }
-
-    .container {
-      padding: 100px 40px 60px;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 0 0 30px;
-      color: #ecf0f1;
-    }
-
-    .account-grid {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 30px;
-      margin-bottom: 40px;
-    }
-
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 16px; align-self: start; position: sticky; top: 88px; }
 
     .profile-card {
-      background: white;
-      border: 1px solid #bdc3c7;
-      border-radius: 6px;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background: var(--navy-light); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 20px; padding: 28px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .profile-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
-    .profile-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #3498db;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin: 0 auto 12px;
-      border: 2px solid #2c3e50;
+    .avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--gold-dim); border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 16px;
     }
 
-    .profile-name {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin: 0 0 6px;
-      color: #2c3e50;
-    }
+    .profile-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+    .profile-email { font-size: 0.8rem; color: var(--muted); }
 
-    .profile-email {
-      color: #666;
-      font-size: 0.9rem;
-      margin: 0;
-    }
-
-    .nav-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .nav-menu { display: flex; flex-direction: column; gap: 4px; }
 
     .nav-item {
-      background: white;
-      border: 1px solid #bdc3c7;
-      border-radius: 4px;
-      padding: 10px 12px;
-      cursor: pointer;
-      font-weight: 500;
-      color: #333;
+      padding: 12px 16px; border-radius: 10px; cursor: pointer;
+      font-size: 0.875rem; font-weight: 500; color: var(--muted);
+      transition: all 0.2s; display: flex; align-items: center; gap: 10px;
+    }
+    .nav-item:hover { background: var(--gold-dim); color: var(--cream); }
+    .nav-item.active { background: var(--gold-dim); color: var(--gold); border-left: 2px solid var(--gold); }
+
+    /* Main content */
+    .content-area {
+      background: var(--navy-light); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 20px; padding: 36px;
     }
 
-    .nav-item:hover,
-    .nav-item.active {
-      background: #3498db;
-      border-color: #2980b9;
-      color: white;
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .section-header { margin-bottom: 28px; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
+      color: var(--cream); margin-bottom: 6px;
+    }
+    .section-header p { color: var(--muted); font-size: 0.875rem; }
+
+    /* Overview stats */
+    .ov-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .ov-card {
+      background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 14px; padding: 24px; text-align: center;
+    }
+    .ov-num {
+      font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700;
+      color: var(--gold); display: block; margin-bottom: 6px;
+    }
+    .ov-lbl { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Booking items */
+    .booking-item {
+      background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: border-color 0.2s;
+    }
+    .booking-item:hover { border-color: rgba(201,168,76,0.3); }
+
+    .booking-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+      color: var(--cream); margin-bottom: 6px;
+    }
+    .booking-details { font-size: 0.82rem; color: var(--muted); }
+
+    .badge {
+      background: rgba(46,204,113,0.15); color: var(--green);
+      border: 1px solid rgba(46,204,113,0.3);
+      padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+      white-space: nowrap;
     }
 
-    .main-content {
-      background: white;
-      border: 1px solid #bdc3c7;
-      border-radius: 6px;
-      padding: 25px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Settings form */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-field { margin-bottom: 0; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      display: block; font-size: 0.75rem; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; text-transform: uppercase;
     }
-
-    .content-section {
-      display: none;
+    .form-field input {
+      width: 100%; padding: 12px 16px;
+      background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px; color: var(--cream);
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; transition: border-color 0.2s;
     }
-
-    .content-section.active {
-      display: block;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0 0 20px;
-      color: #2c3e50;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #2c3e50;
-      font-size: 0.9rem;
-      display: block;
-    }
-
-    .form-group input {
-      padding: 8px 12px;
-      border: 1px solid #bdc3c7;
-      border-radius: 4px;
-      background: white;
-      color: #333;
-      font-size: 0.9rem;
-      width: 100%;
-    }
-
-    .form-group input::placeholder {
-      color: #999;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: #3498db;
-      box-shadow: 0 0 3px rgba(52, 152, 219, 0.3);
-    }
+    .form-field input:focus { outline: none; border-color: var(--gold); }
+    .form-field input::placeholder { color: #3a4560; }
 
     .btn-save {
-      background: #3498db;
-      color: white;
-      border: none;
-      padding: 8px 24px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.9rem;
-      align-self: flex-start;
+      background: var(--gold); color: var(--navy); border: none;
+      padding: 12px 32px; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; margin-top: 24px;
     }
+    .btn-save:hover { background: var(--gold-light); }
 
-    .btn-save:hover {
-      background: #2980b9;
+    /* Payment */
+    .payment-card {
+      background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-
-    .booking-item {
-      background: #ecf0f1;
-      border: 1px solid #bdc3c7;
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card-info .card-name { font-weight: 600; color: var(--cream); font-size: 0.95rem; margin-bottom: 4px; }
+    .card-info .card-num { font-size: 0.82rem; color: var(--muted); }
+    .badge-default {
+      background: var(--gold-dim); color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
     }
-
-    .booking-info h4 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-      color: #2c3e50;
+    .btn-remove {
+      background: transparent; border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted); padding: 6px 14px; border-radius: 6px;
+      cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
     }
-
-    .booking-details {
-      color: #666;
-      font-size: 0.85rem;
-      margin: 0;
-    }
-
-    .status-badge {
-      background: #2ecc71;
-      color: white;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .empty-state-icon {
-      font-size: 3rem;
-      margin-bottom: 16px;
-    }
+    .btn-remove:hover { border-color: #e74c3c; color: #e74c3c; }
 
     footer {
-      background: #34495e;
-      padding: 30px 40px 20px;
-      text-align: center;
-      color: #ecf0f1;
-      font-size: 0.85rem;
-      border-top: 2px solid #2c3e50;
-      margin-top: 60px;
+      border-top: 1px solid rgba(201,168,76,0.15); padding: 32px 56px;
+      display: flex; justify-content: space-between; align-items: center;
     }
+    footer p { color: var(--muted); font-size: 0.85rem; }
 
-    @media (max-width: 768px) {
-      .container {
-        padding: 100px 20px 60px;
-      }
-
-      .account-grid {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 1.8rem;
-      }
-
-      .topbar {
-        padding: 0 20px;
-        min-height: 70px;
-      }
-
-      .nav-links {
-        gap: 16px;
-        font-size: 0.85rem;
-      }
-
-      .booking-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .status-badge {
-        margin-top: 12px;
-      }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; padding: 90px 24px 60px; }
+      nav { padding: 0 20px; }
+      .sidebar { position: static; }
+      .ov-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; padding: 28px 24px; text-align: center; }
+      .booking-item { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
   </style>
 </head>
-
 <body>
 
-  <div class="topbar">
-    <div class="brand">EventHub</div>
-    <div class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="book.html">Book Tickets</a>
-      <a href="parking.html">Parking</a>
-      <a href="account.html">Account</a>
-    </div>
+<nav>
+  <a href="home.html"><div class="brand">Park<span>Pass</span></div></a>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="book.html">Book Tickets</a>
+    <a href="parking.html">Parking</a>
+    <a href="account.html" class="active">Account</a>
+    <a href="book.html" class="nav-cta">Book Now</a>
   </div>
+</nav>
 
-  <div class="container">
-    <h1>👤 My Account</h1>
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="profile-card">
+      <div class="avatar">👤</div>
+      <div class="profile-name" id="user-name">John Doe</div>
+      <div class="profile-email" id="user-email">john@example.com</div>
+    </div>
 
-    <div class="account-grid">
-      <div class="sidebar">
-        <div class="profile-card">
-          <div class="profile-avatar">👤</div>
-          <h3 class="profile-name" id="user-name">John Doe</h3>
-          <p class="profile-email" id="user-email">john@example.com</p>
-        </div>
+    <div class="nav-menu">
+      <div class="nav-item active" onclick="switchTo('overview', this)">📊 &nbsp;Overview</div>
+      <div class="nav-item" onclick="switchTo('bookings', this)">🎫 &nbsp;My Bookings</div>
+      <div class="nav-item" onclick="switchTo('parking', this)">🅿️ &nbsp;Parking History</div>
+      <div class="nav-item" onclick="switchTo('settings', this)">⚙️ &nbsp;Settings</div>
+      <div class="nav-item" onclick="switchTo('payment', this)">💳 &nbsp;Payment Methods</div>
+    </div>
+  </aside>
 
-        <div class="nav-menu">
-          <div class="nav-item active" onclick="switchSection('overview')">📊 Overview</div>
-          <div class="nav-item" onclick="switchSection('bookings')">🎫 My Bookings</div>
-          <div class="nav-item" onclick="switchSection('parking')">🅿️ Parking History</div>
-          <div class="nav-item" onclick="switchSection('settings')">⚙️ Settings</div>
-          <div class="nav-item" onclick="switchSection('payment')">💳 Payment Methods</div>
-        </div>
+  <!-- Main area -->
+  <div class="content-area">
+
+    <!-- Overview -->
+    <div class="section active" id="sec-overview">
+      <div class="section-header">
+        <h2>Welcome Back, John</h2>
+        <p>Here's a summary of your activity on ParkPass.</p>
       </div>
-
-      <div class="main-content">
-        <!-- Overview Section -->
-        <div class="content-section active" id="overview">
-          <h2 class="section-title">Welcome Back!</h2>
-          <p>Manage your concert bookings, parking reservations, and account settings all in one place.</p>
-          
-          <div style="margin-top: 30px;">
-            <h3>Quick Stats</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-              <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; text-align: center;">
-                <div style="font-size: 2rem; font-weight: 700; margin-bottom: 8px;">3</div>
-                <div style="color: rgba(255, 255, 255, 0.7);">Upcoming Concerts</div>
-              </div>
-              <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; text-align: center;">
-                <div style="font-size: 2rem; font-weight: 700; margin-bottom: 8px;">2</div>
-                <div style="color: rgba(255, 255, 255, 0.7);">Active Parking</div>
-              </div>
-              <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; text-align: center;">
-                <div style="font-size: 2rem; font-weight: 700; margin-bottom: 8px;">$485</div>
-                <div style="color: rgba(255, 255, 255, 0.7);">Total Spent</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bookings Section -->
-        <div class="content-section" id="bookings">
-          <h2 class="section-title">Concert Bookings</h2>
-          
-          <div class="booking-item">
-            <div class="booking-info">
-              <h4>🎵 Summer Vibes Festival</h4>
-              <p class="booking-details">July 15, 2026 • Central Park • 2 General Tickets</p>
-            </div>
-            <div class="status-badge">Confirmed</div>
-          </div>
-
-          <div class="booking-item">
-            <div class="booking-info">
-              <h4>🌙 Midnight Dreams Tour</h4>
-              <p class="booking-details">June 22, 2026 • Downtown Arena • 1 VIP Ticket</p>
-            </div>
-            <div class="status-badge">Confirmed</div>
-          </div>
-
-          <div class="booking-item">
-            <div class="booking-info">
-              <h4>⚡ Rock Revolution</h4>
-              <p class="booking-details">August 10, 2026 • Grand Stadium • 2 Premium Tickets</p>
-            </div>
-            <div class="status-badge">Confirmed</div>
-          </div>
-        </div>
-
-        <!-- Parking History Section -->
-        <div class="content-section" id="parking">
-          <h2 class="section-title">Parking History</h2>
-          
-          <div class="booking-item">
-            <div class="booking-info">
-              <h4>🅿️ Central Park Lot</h4>
-              <p class="booking-details">July 14, 2026 • 8 hours • Spot #45</p>
-            </div>
-            <div class="status-badge">Completed</div>
-          </div>
-
-          <div class="booking-item">
-            <div class="booking-info">
-              <h4>🅿️ Downtown Arena Lot</h4>
-              <p class="booking-details">June 21, 2026 • 6 hours • Spot #87</p>
-            </div>
-            <div class="status-badge">Completed</div>
-          </div>
-
-          <div class="booking-item">
-            <div class="booking-info">
-              <h4>🅿️ Grand Stadium Lot</h4>
-              <p class="booking-details">August 9, 2026 • 10 hours • Spot #23</p>
-            </div>
-            <div class="status-badge">Confirmed</div>
-          </div>
-        </div>
-
-        <!-- Settings Section -->
-        <div class="content-section" id="settings">
-          <h2 class="section-title">Account Settings</h2>
-          
-          <div class="form-group">
-            <label for="full-name">Full Name</label>
-            <input type="text" id="full-name" value="John Doe" placeholder="Enter your full name">
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" value="john@example.com" placeholder="Enter your email">
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" value="+1 (555) 123-4567" placeholder="Enter your phone number">
-          </div>
-
-          <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" value="123 Main St, City, State 12345" placeholder="Enter your address">
-          </div>
-
-          <button class="btn-save" onclick="saveSettings()">Save Changes</button>
-        </div>
-
-        <!-- Payment Methods Section -->
-        <div class="content-section" id="payment">
-          <h2 class="section-title">Payment Methods</h2>
-          
-          <div style="margin-bottom: 24px;">
-            <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600;">💳 Visa Card</div>
-                  <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">**** **** **** 4242</div>
-                </div>
-                <span style="background: rgba(76, 175, 80, 0.3); color: #4caf50; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">Default</span>
-              </div>
-            </div>
-
-            <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600;">💳 Mastercard</div>
-                  <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">**** **** **** 8765</div>
-                </div>
-                <button style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: white; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">Remove</button>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn-save" onclick="addPaymentMethod()">+ Add New Payment Method</button>
-        </div>
+      <div class="ov-grid">
+        <div class="ov-card"><span class="ov-num">3</span><span class="ov-lbl">Upcoming Concerts</span></div>
+        <div class="ov-card"><span class="ov-num">2</span><span class="ov-lbl">Active Parking</span></div>
+        <div class="ov-card"><span class="ov-num">$485</span><span class="ov-lbl">Total Spent</span></div>
       </div>
     </div>
+
+    <!-- Bookings -->
+    <div class="section" id="sec-bookings">
+      <div class="section-header">
+        <h2>Concert Bookings</h2>
+        <p>All your upcoming and past ticket reservations.</p>
+      </div>
+      <div class="booking-item">
+        <div>
+          <div class="booking-name">🎸 Summer Vibes Festival</div>
+          <div class="booking-details">July 15, 2026 &nbsp;·&nbsp; Central Park &nbsp;·&nbsp; 2 General Tickets</div>
+        </div>
+        <span class="badge">Confirmed</span>
+      </div>
+      <div class="booking-item">
+        <div>
+          <div class="booking-name">🌙 Midnight Dreams Tour</div>
+          <div class="booking-details">June 22, 2026 &nbsp;·&nbsp; Downtown Arena &nbsp;·&nbsp; 1 VIP Ticket</div>
+        </div>
+        <span class="badge">Confirmed</span>
+      </div>
+      <div class="booking-item">
+        <div>
+          <div class="booking-name">⚡ Rock Revolution</div>
+          <div class="booking-details">August 10, 2026 &nbsp;·&nbsp; Grand Stadium &nbsp;·&nbsp; 2 Premium Tickets</div>
+        </div>
+        <span class="badge">Confirmed</span>
+      </div>
+    </div>
+
+    <!-- Parking History -->
+    <div class="section" id="sec-parking">
+      <div class="section-header">
+        <h2>Parking History</h2>
+        <p>Your past and upcoming parking reservations.</p>
+      </div>
+      <div class="booking-item">
+        <div>
+          <div class="booking-name">🅿️ Central Park Lot</div>
+          <div class="booking-details">July 14, 2026 &nbsp;·&nbsp; 8 hours &nbsp;·&nbsp; Spot #45</div>
+        </div>
+        <span class="badge">Completed</span>
+      </div>
+      <div class="booking-item">
+        <div>
+          <div class="booking-name">🅿️ Downtown Arena Lot</div>
+          <div class="booking-details">June 21, 2026 &nbsp;·&nbsp; 6 hours &nbsp;·&nbsp; Spot #87</div>
+        </div>
+        <span class="badge">Completed</span>
+      </div>
+      <div class="booking-item">
+        <div>
+          <div class="booking-name">🅿️ Grand Stadium Lot</div>
+          <div class="booking-details">August 9, 2026 &nbsp;·&nbsp; 10 hours &nbsp;·&nbsp; Spot #23</div>
+        </div>
+        <span class="badge">Confirmed</span>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="section" id="sec-settings">
+      <div class="section-header">
+        <h2>Account Settings</h2>
+        <p>Update your personal information below.</p>
+      </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Full Name</label>
+          <input type="text" id="s-name" value="John Doe" placeholder="Your full name">
+        </div>
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" id="s-email" value="john@example.com" placeholder="your@email.com">
+        </div>
+        <div class="form-field">
+          <label>Phone Number</label>
+          <input type="tel" id="s-phone" value="+1 (555) 123-4567" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-field">
+          <label>Address</label>
+          <input type="text" id="s-address" value="123 Main St, City, State 12345" placeholder="Your address">
+        </div>
+      </div>
+      <button class="btn-save" onclick="saveSettings()">Save Changes</button>
+    </div>
+
+    <!-- Payment -->
+    <div class="section" id="sec-payment">
+      <div class="section-header">
+        <h2>Payment Methods</h2>
+        <p>Manage your saved cards and billing information.</p>
+      </div>
+      <div class="payment-card">
+        <div class="card-info">
+          <div class="card-name">💳 Visa Card</div>
+          <div class="card-num">**** **** **** 4242</div>
+        </div>
+        <span class="badge-default">Default</span>
+      </div>
+      <div class="payment-card">
+        <div class="card-info">
+          <div class="card-name">💳 Mastercard</div>
+          <div class="card-num">**** **** **** 8765</div>
+        </div>
+        <button class="btn-remove">Remove</button>
+      </div>
+      <button class="btn-save" onclick="alert('Redirecting to payment setup...')">+ Add New Card</button>
+    </div>
+
   </div>
+</div>
 
-  <footer>
-    <p>&copy; 2026 EventHub. All rights reserved.</p>
-  </footer>
+<footer>
+  <div class="brand">Park<span>Pass</span></div>
+  <p>&copy; 2026 ParkPass. All rights reserved.</p>
+</footer>
 
-  <script>
-    function switchSection(sectionId) {
-      // Hide all sections
-      document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-      });
+<script>
+  function switchTo(id, el) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('sec-' + id).classList.add('active');
+    el.classList.add('active');
+  }
 
-      // Remove active from all nav items
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-      });
-
-      // Show selected section
-      document.getElementById(sectionId).classList.add('active');
-
-      // Add active to clicked nav item
-      event.target.classList.add('active');
-    }
-
-    function saveSettings() {
-      const name = document.getElementById('full-name').value;
-      const email = document.getElementById('email').value;
-      
-      document.getElementById('user-name').textContent = name;
-      document.getElementById('user-email').textContent = email;
-      
-      alert('✅ Settings saved successfully!');
-    }
-
-    function addPaymentMethod() {
-      alert('Redirecting to payment method setup...');
-    }
-  </script>
-
+  function saveSettings() {
+    const name = document.getElementById('s-name').value;
+    const email = document.getElementById('s-email').value;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-email').textContent = email;
+    alert('✅ Settings saved successfully!');
+  }
+</script>
 </body>
-
 </html>
