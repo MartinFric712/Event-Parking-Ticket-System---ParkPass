@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventHub - Home</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #2c3e50;
+      color: #333;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      min-height: 70px;
+      background: #34495e;
+      border-bottom: 2px solid #2c3e50;
+    }
+
+    .brand {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ecf0f1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand::before {
+      content: "🎪";
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #ecf0f1;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    .nav-links a:hover {
+      color: #3498db;
+      background: #2c3e50;
+    }
+
+    .container {
+      padding: 100px 40px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 60px;
+      background: #ecf0f1;
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid #bdc3c7;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 16px;
+      color: #2c3e50;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #555;
+      margin: 0 0 24px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary:hover {
+      background: #2980b9;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid #ecf0f1;
+      padding: 8px 28px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(236, 240, 241, 0.1);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid #bdc3c7;
+      border-radius: 6px;
+      padding: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin: 0 0 10px;
+      color: #2c3e50;
+    }
+
+    .feature-card p {
+      color: #666;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: #34495e;
+      padding: 30px 40px 20px;
+      text-align: center;
+      color: #ecf0f1;
+      font-size: 0.85rem;
+      border-top: 2px solid #2c3e50;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 80px 20px 40px;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+      }
+
+      .topbar {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .features-grid {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="brand">EventHub</div>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="book.html">Book Tickets</a>
+      <a href="parking.html">Parking</a>
+      <a href="account.html">Account</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Welcome to EventHub</h1>
+      <p>Your one-stop platform for concert tickets and parking reservations</p>
+      <div class="hero-buttons">
+        <a href="book.html"><button class="btn-primary">Book Concert Tickets</button></a>
+        <a href="parking.html"><button class="btn-secondary">Reserve Parking</button></a>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎵</div>
+        <h3>Concert Tickets</h3>
+        <p>Book tickets to your favorite concerts and live events. Exclusive pre-sales and early bird discounts available.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🅿️</div>
+        <h3>Parking Reservations</h3>
+        <p>Reserve premium parking spots near venues. 24/7 security and convenient access guaranteed.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Quick Checkout</h3>
+        <p>Fast and secure booking process. Complete your reservations in just a few clicks.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Ready</h3>
+        <p>Manage your tickets and parking from anywhere. Full mobile support for on-the-go bookings.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎟️</div>
+        <h3>E-Tickets</h3>
+        <p>Instant digital tickets sent to your email. No need to print - just show your phone!</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Secure Payment</h3>
+        <p>Multiple payment options with industry-leading security. Your data is always protected.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 EventHub. All rights reserved.</p>
+  </footer>
+
+</body>
+
+</html>
