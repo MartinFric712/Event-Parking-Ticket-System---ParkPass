@@ -26,24 +26,22 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="profile-card">
-      <div class="avatar">👤</div>
+      <div class="avatar"></div>
       <div class="profile-name" id="user-name">John Doe</div>
       <div class="profile-email" id="user-email">john@example.com</div>
     </div>
 
     <div class="nav-menu">
-      <div class="nav-item active" onclick="switchTo('overview', this)">📊 &nbsp;Overview</div>
-      <div class="nav-item" onclick="switchTo('bookings', this)">🎫 &nbsp;My Bookings</div>
-      <div class="nav-item" onclick="switchTo('parking', this)">🅿️ &nbsp;Parking History</div>
-      <div class="nav-item" onclick="switchTo('settings', this)">⚙️ &nbsp;Settings</div>
-      <div class="nav-item" onclick="switchTo('payment', this)">💳 &nbsp;Payment Methods</div>
+      <div class="nav-item" onclick="switchTo('bookings', this)">&nbsp;My Bookings</div>
+      <div class="nav-item" onclick="switchTo('settings', this)">&nbsp;Settings</div>
+      <div class="nav-item" onclick="switchTo('payment', this)">&nbsp;Payment Methods</div>
     </div>
   </aside>
 
-  <!-- Main area -->
+
   <div class="content-area">
 
-    <!-- Overview -->
+    
     <div class="section active" id="sec-overview">
       <div class="section-header">
         <h2>Welcome Back, John</h2>
@@ -56,7 +54,7 @@
       </div>
     </div>
 
-    <!-- Bookings -->
+    
     <div class="section" id="sec-bookings">
       <div class="section-header">
         <h2>Concert Bookings</h2>
@@ -64,57 +62,29 @@
       </div>
       <div class="booking-item">
         <div>
-          <div class="booking-name">🎸 Summer Vibes Festival</div>
+          <div class="booking-name">Summer Vibes Festival</div>
           <div class="booking-details">July 15, 2026 &nbsp;·&nbsp; Central Park &nbsp;·&nbsp; 2 General Tickets</div>
         </div>
         <span class="badge">Confirmed</span>
       </div>
       <div class="booking-item">
         <div>
-          <div class="booking-name">🌙 Midnight Dreams Tour</div>
+          <div class="booking-name">Midnight Dreams Tour</div>
           <div class="booking-details">June 22, 2026 &nbsp;·&nbsp; Downtown Arena &nbsp;·&nbsp; 1 VIP Ticket</div>
         </div>
         <span class="badge">Confirmed</span>
       </div>
       <div class="booking-item">
         <div>
-          <div class="booking-name">⚡ Rock Revolution</div>
+          <div class="booking-name">Rock Revolution</div>
           <div class="booking-details">August 10, 2026 &nbsp;·&nbsp; Grand Stadium &nbsp;·&nbsp; 2 Premium Tickets</div>
         </div>
         <span class="badge">Confirmed</span>
       </div>
     </div>
 
-    <!-- Parking History -->
-    <div class="section" id="sec-parking">
-      <div class="section-header">
-        <h2>Parking History</h2>
-        <p>Your past and upcoming parking reservations.</p>
-      </div>
-      <div class="booking-item">
-        <div>
-          <div class="booking-name">🅿️ Central Park Lot</div>
-          <div class="booking-details">July 14, 2026 &nbsp;·&nbsp; 8 hours &nbsp;·&nbsp; Spot #45</div>
-        </div>
-        <span class="badge">Completed</span>
-      </div>
-      <div class="booking-item">
-        <div>
-          <div class="booking-name">🅿️ Downtown Arena Lot</div>
-          <div class="booking-details">June 21, 2026 &nbsp;·&nbsp; 6 hours &nbsp;·&nbsp; Spot #87</div>
-        </div>
-        <span class="badge">Completed</span>
-      </div>
-      <div class="booking-item">
-        <div>
-          <div class="booking-name">🅿️ Grand Stadium Lot</div>
-          <div class="booking-details">August 9, 2026 &nbsp;·&nbsp; 10 hours &nbsp;·&nbsp; Spot #23</div>
-        </div>
-        <span class="badge">Confirmed</span>
-      </div>
-    </div>
 
-    <!-- Settings -->
+    
     <div class="section" id="sec-settings">
       <div class="section-header">
         <h2>Account Settings</h2>
@@ -141,7 +111,7 @@
       <button class="btn-save" onclick="saveSettings()">Save Changes</button>
     </div>
 
-    <!-- Payment -->
+  
     <div class="section" id="sec-payment">
       <div class="section-header">
         <h2>Payment Methods</h2>
@@ -149,14 +119,14 @@
       </div>
       <div class="payment-card">
         <div class="card-info">
-          <div class="card-name">💳 Visa Card</div>
+          <div class="card-name">Visa Card</div>
           <div class="card-num">**** **** **** 4242</div>
         </div>
         <span class="badge-default">Default</span>
       </div>
       <div class="payment-card">
         <div class="card-info">
-          <div class="card-name">💳 Mastercard</div>
+          <div class="card-name">Mastercard</div>
           <div class="card-num">**** **** **** 8765</div>
         </div>
         <button class="btn-remove">Remove</button>

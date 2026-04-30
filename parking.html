@@ -22,7 +22,7 @@
 
 <div class="main">
 
-  <!-- ── LEFT: map ── -->
+
   <div class="left-col">
     <p class="eyebrow">Real-time Availability</p>
     <h1>Reserve Your Parking Spot</h1>
@@ -46,10 +46,10 @@
     <div class="spots-grid" id="spots-grid"></div>
   </div>
 
-  <!-- ── RIGHT: booking panel ── -->
+ 
   <div class="booking-panel">
 
-    <!-- Selected spots -->
+    
     <div class="selected-display">
       <div class="selected-count">Selected: <strong id="sel-count">0 spots</strong>
         <button class="clear-btn" onclick="clearSpotsSelection()">clear</button>
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <!-- Step pills -->
+    
     <div class="step-pills">
       <div class="spill" id="spill-1"><span class="spill-n">1</span><span class="spill-lbl">Arrival</span></div>
       <div class="spill-line"></div>
@@ -68,12 +68,12 @@
       <div class="spill" id="spill-3"><span class="spill-n">3</span><span class="spill-lbl">Times</span></div>
     </div>
 
-    <!-- Step hint -->
+    
     <div class="step-hint-box">
       <span id="step-hint"></span>
     </div>
 
-    <!-- Calendar -->
+    
     <div class="calendar">
       <div class="cal-nav-row">
         <button class="cal-arr" onclick="prevMonth()">&#8249;</button>
@@ -85,7 +85,7 @@
         <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
       </div>
 
-      <!-- step indicator dots below weekdays -->
+      
       <div class="cal-step-track">
         <div class="cal-step-item">
           <div class="cal-step-dot" id="cal-step-arr"></div>
@@ -106,22 +106,22 @@
       <button class="reset-dates-btn" onclick="resetDatePick()">↺ Reset dates</button>
     </div>
 
-    <!-- Times (step 3) -->
+    
     <div id="times-wrap" style="display:none">
       <div class="times-grid">
         <div class="time-field">
-          <label>🟢 Arrival time</label>
+          <label>Arrival time</label>
           <select id="arr-time" onchange="recalcTimeHint()"></select>
         </div>
         <div class="time-field">
-          <label>🔴 Departure time</label>
+          <label>Departure time</label>
           <select id="dep-time" onchange="recalcTimeHint()"></select>
         </div>
       </div>
       <div id="time-hint" class="time-hint"></div>
     </div>
 
-    <!-- Form -->
+    
     <div class="form-section">
       <div class="form-field">
         <label>Full Name</label>
@@ -147,7 +147,7 @@
       </div>
     </div>
 
-    <!-- Price summary -->
+    
     <div class="price-summary">
       <div class="price-row"><span>Rate per spot</span><span id="p-rate">—</span></div>
       <div class="price-row"><span>Spots</span><span id="p-spots">0</span></div>
@@ -158,7 +158,7 @@
   </div>
 </div>
 
-<!-- ── Confirmation Overlay ── -->
+
 <div class="confirm-overlay" id="confirm-overlay" style="display:none">
   <div class="confirm-modal">
     <div class="conf-icon">🎉</div>
