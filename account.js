@@ -10,5 +10,5 @@ function switchTo(id, el) {
     const email = document.getElementById('s-email').value;
     document.getElementById('user-name').textContent = name;
     document.getElementById('user-email').textContent = email;
-    alert('✅ Settings saved successfully!');
+    alert(' Settings saved successfully!');
   }
