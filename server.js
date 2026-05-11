@@ -1,5 +1,7 @@
 // server.js — ParkPass
-// Serves all HTML/CSS/JS from /public and exposes POST /api/reserve
+// Serves all HTML/CSS/JS from /public
+// POST /api/reserve  — create a parking reservation
+// GET  /api/search/:plate — look up a reservation by licence plate
 
 const express = require("express");
 const path    = require("path");
@@ -11,21 +13,19 @@ const PORT = 3000;
 app.use(express.json());
 
 // Serve everything inside /public (home.html, parking.html, book.html,
-// account.html, index.html, all CSS and JS files)
+// account.html, index.html, search.html, all CSS and JS files)
 app.use(express.static(path.join(__dirname, "public")));
 
-// ── Root redirect → index.html (the reservation form) ────────
-// Express static already handles this, but being explicit:
+// ── Root redirect → index.html ────────────────────────────────
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ── API: Parking reservation ──────────────────────────────────
+// ── API: Create parking reservation ──────────────────────────
 app.post("/api/reserve", async (req, res) => {
   try {
     const { firstName, lastName, email, phone, plate, startTime, endTime } = req.body;
 
-    // Basic validation
     if (!firstName || !lastName || !email || !phone || !plate || !startTime || !endTime) {
       return res.status(400).json({ message: "All fields are required." });
     }
@@ -78,6 +78,32 @@ app.post("/api/reserve", async (req, res) => {
   }
 });
 
+// ── API: Search reservation by licence plate ──────────────────
+app.get("/api/search/:plate", async (req, res) => {
+  try {
+    const plate = req.params.plate.toUpperCase();
+
+    const response = await fetch(
+      "http://localhost:9080/customers-contracts/v2/de_studentui/customers/C2026CNeRR6w/contracts/A2026X0qTl9Woq/consumers/visitor"
+    );
+
+    const data = await response.json();
+
+    const visitor = data.content?.find((item) =>
+      item.licensePlates?.some((p) => p.toUpperCase() === plate)
+    );
+
+    if (!visitor) {
+      return res.status(404).json({ message: "Rezervácia nebola nájdená" });
+    }
+
+    res.json(visitor);
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).json({ message: "Server error. Is the parking API running on port 9080?" });
+  }
+});
+
 // ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`
@@ -91,9 +117,11 @@ app.listen(PORT, () => {
   ║   /parking.html  → Parking map       ║
   ║   /book.html     → Book tickets      ║
   ║   /account.html  → Account           ║
+  ║   /search.html   → Search by plate   ║
   ║                                      ║
   ║   API:                               ║
   ║   POST /api/reserve                  ║
+  ║   GET  /api/search/:plate            ║
   ╚══════════════════════════════════════╝
   `);
 });
