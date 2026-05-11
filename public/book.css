@@ -250,3 +250,21 @@
       .modal { padding: 28px 20px; }
       footer { flex-direction: column; gap: 12px; padding: 28px 24px; text-align: center; }
     }
+/* ── Toast (matches parking.css) ── */
+#pp-toast {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  padding: 13px 20px; border-radius: 10px; font-size: 0.85rem;
+  max-width: 320px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  opacity: 0; transition: opacity 0.3s;
+  font-family: 'DM Sans', sans-serif;
+}
+#pp-toast.err { background: #2d0d0d; border: 1px solid #e74c3c; color: #ff8a80; }
+#pp-toast.ok  { background: #0d2d1a; border: 1px solid #2ecc71; color: #80ffb0; }
+
+/* ── Field error state ── */
+.field-error {
+  color: #ff8a80;
+  font-size: 0.72rem;
+  margin-top: 5px;
+  font-weight: 500;
+}

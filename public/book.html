@@ -28,7 +28,7 @@
 
 <div class="concerts-grid" id="concerts-grid"></div>
 
-
+<!-- Booking modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -44,7 +44,7 @@
       <input type="email" id="f-email" placeholder="you@example.com">
     </div>
     <div class="form-field">
-      <label>Phone</label>
+      <label>Phone <span style="color:#3a4560;font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
       <input type="tel" id="f-phone" placeholder="+1 (555) 000-0000">
     </div>
     <div class="form-field">
@@ -56,13 +56,43 @@
   </div>
 </div>
 
+<!-- Confirmation overlay (like parking's confirm modal) -->
+<div class="modal-overlay" id="confirm-overlay" style="display:none;">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:3rem;margin-bottom:12px;">🎟️</div>
+    <p class="modal-eyebrow">Booking Confirmed</p>
+    <h2 class="modal-title" style="margin-bottom:6px;">You're all set!</h2>
+    <p style="color:#8892a4;font-size:0.875rem;margin-bottom:24px;">A confirmation has been sent to your email.</p>
+
+    <div style="background:#111827;border-radius:12px;padding:16px 20px;margin-bottom:20px;text-align:left;">
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(201,168,76,0.08);font-size:0.85rem;">
+        <span style="color:#8892a4;">Event</span>
+        <strong id="conf-event" style="color:#f5f0e8;text-align:right;max-width:60%;"></strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(201,168,76,0.08);font-size:0.85rem;">
+        <span style="color:#8892a4;">Tier</span>
+        <strong id="conf-tier" style="color:#f5f0e8;"></strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(201,168,76,0.08);font-size:0.85rem;">
+        <span style="color:#8892a4;">Email</span>
+        <strong id="conf-email" style="color:#f5f0e8;text-align:right;max-width:60%;word-break:break-all;"></strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:0.95rem;">
+        <span style="color:#8892a4;font-weight:700;">Total</span>
+        <strong id="conf-total" style="color:#c9a84c;font-family:'Playfair Display',serif;font-size:1.1rem;"></strong>
+      </div>
+    </div>
+
+    <button class="btn-submit" onclick="closeConfirmation()">Done</button>
+  </div>
+</div>
+
 <footer>
   <div class="brand">Park<span>Pass</span></div>
   <p>&copy; 2026 ParkPass. All rights reserved.</p>
 </footer>
 
-  <script src="book.js"></script>
-
+<script src="book.js"></script>
 
 </body>
 </html>
