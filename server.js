@@ -109,15 +109,15 @@ app.listen(PORT, () => {
   console.log(`
   ╔══════════════════════════════════════╗
   ║   ParkPass server running            ║
-  ║   http://localhost:${PORT}               ║
+  ║   http://localhost:${PORT}           ║
   ║                                      ║
   ║   Pages:                             ║
-  ║   /              → index.html        ║
-  ║   /home.html     → Home              ║
-  ║   /parking.html  → Parking map       ║
-  ║   /book.html     → Book tickets      ║
-  ║   /account.html  → Account           ║
-  ║   /search.html   → Search by plate   ║
+  ║                                      ║
+  ║  /home.html     → Home               ║
+  ║  /parking.html  → Book and find spots║
+  ║  /book.html     → Book tickets       ║
+  ║  /account.html  → Account            ║
+  ║                                      ║
   ║                                      ║
   ║   API:                               ║
   ║   POST /api/reserve                  ║
