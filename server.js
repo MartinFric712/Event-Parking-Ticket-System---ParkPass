@@ -94,7 +94,7 @@ app.get("/api/search/:plate", async (req, res) => {
     );
 
     if (!visitor) {
-      return res.status(404).json({ message: "Rezervácia nebola nájdená" });
+      return res.status(404).json({ message: "Reservation not found" });
     }
 
     res.json(visitor);
