@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ParkPass — Rezervácia parkovania</title>
+  <title>ParkPass — Reserve Parking</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
       <a href="/book.html">Book Tickets</a>
       <a href="/parking.html">Parking</a>
       <a href="/account.html">Account</a>
-      <a href="/index.html" class="nav-cta">Rezervovať</a>
+      <a href="/index.html" class="nav-cta">Reserve</a>
     </div>
   </nav>
 
@@ -68,28 +68,28 @@
 
       <div class="text-center mb-8">
         <p class="text-[#c9a84c] text-xs font-semibold tracking-[3px] uppercase mb-3">
-          Parkovisko 4 • Event Parking
+          Parking Lot 4 • Event Parking
         </p>
         <h1 class="text-3xl font-bold mb-2" style="font-family:'Playfair Display',serif; color:#f5f0e8;">
-          Rezervácia parkovania
+          Reserve Parking
         </h1>
-        <p class="text-[#8892a4] text-sm">Vyplňte formulár a zarezervujte si miesto.</p>
+        <p class="text-[#8892a4] text-sm">Fill in the form to reserve your spot.</p>
       </div>
 
       <form id="reservationForm" class="space-y-5">
 
         <div class="grid md:grid-cols-2 gap-5">
           <div>
-            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Meno</label>
+            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">First Name</label>
             <input required name="firstName"
               class="w-full bg-[#0a0f1e] border border-[rgba(201,168,76,0.15)] rounded-xl px-4 py-3 text-[#f5f0e8] focus:outline-none focus:border-[#c9a84c] transition-colors"
               placeholder="Martin" />
           </div>
           <div>
-            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Priezvisko</label>
+            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Last Name</label>
             <input required name="lastName"
               class="w-full bg-[#0a0f1e] border border-[rgba(201,168,76,0.15)] rounded-xl px-4 py-3 text-[#f5f0e8] focus:outline-none focus:border-[#c9a84c] transition-colors"
-              placeholder="Novák" />
+              placeholder="Smith" />
           </div>
         </div>
 
@@ -101,7 +101,7 @@
               placeholder="email@gmail.com" />
           </div>
           <div>
-            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Telefón</label>
+            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Phone</label>
             <input required name="phone"
               class="w-full bg-[#0a0f1e] border border-[rgba(201,168,76,0.15)] rounded-xl px-4 py-3 text-[#f5f0e8] focus:outline-none focus:border-[#c9a84c] transition-colors"
               placeholder="0900 000 000" />
@@ -109,7 +109,7 @@
         </div>
 
         <div>
-          <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">ŠPZ</label>
+          <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Licence Plate</label>
           <input required name="plate"
             class="w-full bg-[#0a0f1e] border border-[rgba(201,168,76,0.15)] rounded-xl px-4 py-3 text-[#f5f0e8] uppercase text-xl tracking-widest focus:outline-none focus:border-[#c9a84c] transition-colors"
             placeholder="BA123CD" />
@@ -117,12 +117,12 @@
 
         <div class="grid md:grid-cols-2 gap-5">
           <div>
-            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Začiatok rezervácie</label>
+            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Start Time</label>
             <input type="datetime-local" required name="startTime"
               class="w-full bg-[#0a0f1e] border border-[rgba(201,168,76,0.15)] rounded-xl px-4 py-3 text-[#f5f0e8] focus:outline-none focus:border-[#c9a84c] transition-colors" />
           </div>
           <div>
-            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">Koniec rezervácie</label>
+            <label class="block mb-2 text-xs font-semibold text-[#8892a4] uppercase tracking-wide">End Time</label>
             <input type="datetime-local" required name="endTime"
               class="w-full bg-[#0a0f1e] border border-[rgba(201,168,76,0.15)] rounded-xl px-4 py-3 text-[#f5f0e8] focus:outline-none focus:border-[#c9a84c] transition-colors" />
           </div>
@@ -131,7 +131,7 @@
         <button type="submit" id="submit-btn"
           class="w-full font-bold py-4 rounded-2xl text-lg transition-all"
           style="background:#c9a84c; color:#0a0f1e; font-family:'DM Sans',sans-serif;">
-          Rezervovať parkovanie
+          Reserve Parking
         </button>
 
       </form>
@@ -156,7 +156,7 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      btn.textContent = "Odosielam…";
+      btn.textContent = "Submitting…";
       btn.style.opacity = "0.7";
       btn.disabled = true;
       message.innerHTML = "";
@@ -180,12 +180,12 @@
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Rezervácia zlyhala");
+        if (!response.ok) throw new Error(data.message || "Reservation failed");
 
         message.innerHTML = `
           <div style="background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.4);color:#2ecc71;border-radius:16px;padding:16px;">
-            ✅ Rezervácia úspešná!<br>
-            ID rezervácie: <strong>${data.businessId ?? "—"}</strong>
+            ✅ Reservation successful!<br>
+            Reservation ID: <strong>${data.businessId ?? "—"}</strong>
           </div>`;
         form.reset();
 
@@ -196,7 +196,7 @@
             ❌ ${error.message}
           </div>`;
       } finally {
-        btn.textContent = "Rezervovať parkovanie";
+        btn.textContent = "Reserve Parking";
         btn.style.opacity = "1";
         btn.disabled = false;
       }
